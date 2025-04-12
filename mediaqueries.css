@@ -97,3 +97,41 @@
     text-align: justify;
   }
 }
+
+
+
+@media screen and (max-width: 1200px) {
+  #hamburger-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+
+  #hamburger-nav .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  #hamburger-nav .hamburger-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  #hamburger-nav .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+
+  #hamburger-nav .logo-icon {
+    height: 40px;
+  }
+
+  #hamburger-nav span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+  }
+}
