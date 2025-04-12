@@ -110,7 +110,7 @@ nav a:hover {
   display: flex;
   align-items: center;
   padding-left: 1rem;
-  height: auto;
+  height: 54px;
 }
 
 .logo:hover {
