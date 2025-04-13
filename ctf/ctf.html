@@ -1,32 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Basic Meta Tags -->
-<meta name="title" content="Shubham Ranpise | Cyber Security Researcher">
-<meta name="description" content="Explore real-world CTF solutions from PortSwigger, JWT, IDOR, SSRF, and more.">
 
-<!-- Open Graph (Facebook/LinkedIn) -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://shubhamranpise.com/">
-<meta property="og:title" content="Shubham Ranpise | Cyber Security Researcher">
-<meta property="og:description" content="AppSec Engineer at KPMG. Explore my labs, projects, blog, custom exploits for CTF, and more.">
-<meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shubham Ranpise | Cyber Security Researcher">
-<meta name="twitter:description" content="AppSec Engineer at KPMG. Explore my labs, projects, blog, custom exploits for CTF, and more.">
-<meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+    gtag('config', 'G-45Z0Y6HPDS');
+  </script>
+  <!-- Basic Meta Tags -->
+  <meta name="title" content="Shubham Ranpise | Cyber Security Researcher">
+  <meta name="description" content="Explore real-world CTF solutions from PortSwigger, JWT, IDOR, SSRF, and more.">
 
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./../assets/favicon.png" />
-    <title>CTF Writeups | Shubham Ranpise</title>
-    <link rel="stylesheet" href="./../static/css/style.css" />
-    <link rel="stylesheet" href="./../static/css/mediaqueries.css" />
-  
-<script type="application/ld+json">
+  <!-- Open Graph (Facebook/LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shubhamranpise.com/">
+  <meta property="og:title" content="Shubham Ranpise | Cyber Security Researcher">
+  <meta property="og:description"
+    content="AppSec Engineer at KPMG. Explore my labs, projects, blog, custom exploits for CTF, and more.">
+  <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shubham Ranpise | Cyber Security Researcher">
+  <meta name="twitter:description"
+    content="AppSec Engineer at KPMG. Explore my labs, projects, blog, custom exploits for CTF, and more.">
+  <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="./../assets/favicon.png" />
+  <title>CTF Writeups | Shubham Ranpise</title>
+  <link rel="stylesheet" href="./../static/css/style.css" />
+  <link rel="stylesheet" href="./../static/css/mediaqueries.css" />
+
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -41,81 +53,65 @@
 </script>
 
 </head>
-  <body>
-<header>
+
+<body>
+  <header>
     <nav id="desktop-nav">
       <div class="logo">
         <a href="./../index.html" class="logo-wrapper">
-          <img src="./../assets/home_light.png" 
-          src-light="./../assets/home_light.png" 
-          src-dark="./../assets/home_dark.png" 
-          alt="Home Logo" 
-          class="icon logo-icon" />
+          <img src="./../assets/home_light.png" src-light="./../assets/home_light.png"
+            src-dark="./../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
           <span>Shubham</span>
         </a>
       </div>
-               
+
       <div>
         <ul class="nav-links">
           <li><a href="./../ctf/ctf.html" class="active">CTF</a></li>
           <li><a href="./../notes/notes.html">Notes</a></li>
           <li><a href="./../about/about.html">About</a></li>
           <li>
-            <img
-              id="modeToggle"
-              class="icon color-icon"
-              src="./../assets/theme_light.png"
-              src-light="./../assets/theme_light.png"
-              src-dark="./../assets/theme_dark.png"
-              alt="Color theme icon"
-            />
+            <img id="modeToggle" class="icon color-icon" src="./../assets/theme_light.png"
+              src-light="./../assets/theme_light.png" src-dark="./../assets/theme_dark.png" alt="Color theme icon" />
           </li>
         </ul>
       </div>
     </nav>
-</header>
+  </header>
 
-    <nav id="hamburger-nav">
-      <div class="logo">
-        <a href="./../index.html" class="logo-wrapper">
-          <img src="./../assets/home_light.png" 
-          src-light="./../assets/home_light.png" 
-          src-dark="./../assets/home_dark.png" 
-          alt="Home Logo" 
-          class="icon logo-icon" />
-          <span>Shubham</span>
-        </a>
+  <nav id="hamburger-nav">
+    <div class="logo">
+      <a href="./../index.html" class="logo-wrapper">
+        <img src="./../assets/home_light.png" src-light="./../assets/home_light.png"
+          src-dark="./../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+        <span>Shubham</span>
+      </a>
+    </div>
+    <div class="hamburger-menu">
+      <div class="hamburger-icon" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <div class="hamburger-menu">
-        <div class="hamburger-icon" onclick="toggleMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="menu-links">
-          <li><a href="./../ctf/ctf.html" class="active">CTF</a></li>
-          <li><a href="./../notes/notes.html">Notes</a></li>
-          <li><a href="./../about/about.html">About</a></li>
-          <li>
-            <img
-              id="modeToggle2"
-              class="icon color-icon"
-              src="./../assets/theme_light.png"
-              src-light="./../assets/theme_light.png"
-              src-dark="./../assets/theme_dark.png"
-              alt="Color theme icon"
-            />
-          </li>
-        </div>
+      <div class="menu-links">
+        <li><a href="./../ctf/ctf.html" class="active">CTF</a></li>
+        <li><a href="./../notes/notes.html">Notes</a></li>
+        <li><a href="./../about/about.html">About</a></li>
+        <li>
+          <img id="modeToggle2" class="icon color-icon" src="./../assets/theme_light.png"
+            src-light="./../assets/theme_light.png" src-dark="./../assets/theme_dark.png" alt="Color theme icon" />
+        </li>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    
-<footer>
 
-      <p>Copyright &#169; 2025 Shubham Ranpise.</p>
-    </footer>
+  <footer>
 
-    <script src="./../static/js/main.js"></script>
-  </body>
+    <p>Copyright &#169; 2025 Shubham Ranpise.</p>
+  </footer>
+
+  <script src="./../static/js/main.js"></script>
+</body>
+
 </html>
