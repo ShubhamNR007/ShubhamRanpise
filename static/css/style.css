@@ -41,9 +41,17 @@ h3 {
   color: var(--secondary-color);
 }
 
+main {
+  flex: 1;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
 }
 
 html {
@@ -447,9 +455,11 @@ article .icon {
 
 #contact {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: flex-start;  /* Start at top */
+  align-items: center;          /* Keep horizontal centering */
   height: 70vh;
+  padding-top: 0rem;            /* Optional: adjust spacing from navbar */
 }
 
 .contact-info-upper-container {
@@ -486,9 +496,11 @@ article .icon {
 /* FOOTER SECTION */
 
 footer {
-  margin: 0 1rem;
   margin-top: auto;
+  text-align: center;
+  padding: 1rem;
 }
+
 
 footer p {
   text-align: center;
