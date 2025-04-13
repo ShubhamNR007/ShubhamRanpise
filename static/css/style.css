@@ -453,6 +453,19 @@ article .icon {
 
 /* CONTACT */
 
+#ctf {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;  /* Start at top */
+  align-items: center;          /* Keep horizontal centering */
+  height: 70vh;
+  padding-top: 0rem;            /* Optional: adjust spacing from navbar */
+}
+
+#debug {
+  background: rgba(255, 0, 0, 0.1); /* just to test */
+}
+
 #contact {
   display: flex;
   flex-direction: column;
@@ -593,3 +606,19 @@ footer p {
 
 /* Utility spacing class */
 .spacer { height: 4rem; }
+
+
+
+
+
+.details-container.color-container {
+  transition: background-color 0.3s ease;
+}
+
+.details-container.color-container:hover {
+  background-color: rgba(98, 70, 138, 0.12); /* soft hover glow */
+  box-shadow: 0 0 20px var(--secondary-color); /* optional glow */
+  border-color: var(--secondary-color-2);
+}
+
+  
