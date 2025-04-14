@@ -15,6 +15,7 @@
   --button-border: #5b21b6 0.1rem solid;
   --button-border-2: #ffffff 0.1rem solid;
   --container-border: #a78bfa;
+  --gradient-bg: linear-gradient(to bottom, #f3f0ff, #eae4fc); /* Light violet fade */
 }
 
 /* Dark Mode */
@@ -30,6 +31,7 @@
   --button-border: #7c3aed 0.1rem solid;
   --button-border-2: #0a0517 0.1rem solid;
   --container-border: #6d28d9;
+  --gradient-bg: linear-gradient(to bottom, #140d26, #1c1533); /* Deepened dark blend */
 }
 
 * {
@@ -38,7 +40,7 @@
 }
 
 h3 {
-  color: var(--secondary-color);
+  color: var(--primary-color-3);
 }
 
 main {
@@ -52,6 +54,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+  background: var(--gradient-bg);
 }
 
 html {
@@ -622,3 +625,46 @@ footer p {
 }
 
   
+.lab-section {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.lab-section h2 {
+  margin-top: 2rem;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  text-align: left;
+} 
+
+.lab-list {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  color: var(--secondary-color-2); /* normal state */
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.lab-list li {
+  margin-bottom: 0.5rem;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.lab-list li:hover {
+  color: var(--button-text-hover); /* 🔥 hover effect for number + text */
+}
+
+.lab-list a {
+  text-decoration: none;
+  color: inherit; /* inherit li color */
+  transition: color 0.3s ease;
+}
+
+.lab-list a:hover {
+  color: inherit; /* keeps it synced with li */
+}
+
