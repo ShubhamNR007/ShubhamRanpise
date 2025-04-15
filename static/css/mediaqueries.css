@@ -135,3 +135,9 @@
     color: var(--secondary-color);
   }
 }
+
+@media (min-width: 768px) {
+  .lab-section {
+    width: 60%;
+  }
+}

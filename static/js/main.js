@@ -51,3 +51,28 @@ function setLightMode() {
     icon.src = icon.getAttribute("src-light");
   });
 }
+
+document.querySelectorAll(".copy-btn").forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    const code = btn.closest(".code-block-wrapper").querySelector("code").innerText;
+    navigator.clipboard.writeText(code);
+    btn.textContent = "✅ Copied";
+    setTimeout(() => btn.textContent = "📋 Copy", 1500);
+  });
+});
+
+document.querySelectorAll(".download-btn").forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    const code = btn.closest(".code-block-wrapper").querySelector("code").innerText;
+    const blob = new Blob([code], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `exploit.py`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+});
+
