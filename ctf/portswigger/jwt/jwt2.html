@@ -111,18 +111,23 @@
 
 
     <section id="ctf">
-        <h2 class="lab-heading">JWT Authentication Bypass via Unverified Signature</h2>
+        <h2 class="lab-heading">JWT Authentication Bypass via Flawed Signature Verification</h2>
         <div class="lab-section">
                 <h3 class="lab-subheading">📚 What I Learned</h3>
-                <p>In this challenge, I discovered a weak implementation of JWT validation where the server accepts forged tokens with no valid signature — as long as the structure and claims look valid. By simply changing the subject (sub) to administrator and skipping the signature altogether, I was able to impersonate an admin and delete another user from the app. This flaw wasn’t about skipping signature logic — but trusting unsigned data.</p>
+                <p>While playing with JWTs, I found a scenario where the server accepts tokens with &quot;alg&quot;:
+                    &quot;none&quot;,
+                    which basically means no signature at all. That’s a massive security flaw. I could forge my own
+                    token and the server blindly trusted it — this let me switch identities to administrator and
+                    perform privileged actions. It was an eye-opener on why skipping JWT validation is catastrophic.</p>
                
                 <h3 class="lab-subheading">⚙️ How to Run the Exploit</h3>
                 <p>
-                    [+] Open Burp Suite to observe the entire flow.<br>
-                    [+] The script uses a static "alg": "none" and creates a full JWT with a fake payload and no signature.<br>
-                    [+] No login or dynamic token grabbing here — just pure forgery.<br>
-                    [+] The forged JWT is passed via the session cookie to hit the admin delete endpoint.<br>
-                    [+] Watch the Burp flow and read script comments to understand how the forged JWT is structured.</p>
+                    [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
+                    [+] The script logs in as wiener to capture a real JWT and extracts the kid value.<br>
+                    [+] It then crafts a JWT with &quot;alg&quot;: &quot;none&quot; and updates the sub field to
+                    administrator.<br>
+                    [+] This forged token is used to send a request that deletes the target user.<br>
+                    [+] Check the Burp history to follow how the JWT was modified and used.</p>
                 
                 <h3 class="lab-subheading">🖥️ Command to Run</h3>
 <div class="code-block-wrapper">
