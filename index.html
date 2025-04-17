@@ -1,60 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    <!-- Canonical & SEO -->
+    <title>Shubham Ranpise | Cybersecurity Researcher</title>
+    <meta name="description" content="I'm Shubham Ranpise, a cybersecurity researcher. I specialize in web application security, CTFs, API testing, and secure development. Explore my writeups, labs, and notes." />
+    <link rel="canonical" href="https://shubhamranpise.com/" />
 
-    gtag('config', 'G-45Z0Y6HPDS');
-  </script>
-  <link rel="canonical" href="https://shubhamranpise.com/" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <!-- Basic Meta Tags -->
-  <meta name="title" content="Shubham Ranpise | Cyber Security Researcher">
-  <meta name="description" content="Cyber Security Researcher. Explore my portfolio, notes, CTFs, and more.">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Shubham Ranpise | Cybersecurity Researcher" />
+    <meta property="og:description" content="Explore Shubham's cybersecurity journey through writeups, CTF labs, and AppSec research. Deep dives into practical exploits, secure coding, and developer education." />
+    <meta property="og:url" content="https://shubhamranpise.com/" />
+    <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
 
-  <!-- Open Graph (Facebook/LinkedIn) -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shubhamranpise.com/">
-  <meta property="og:title" content="Shubham Ranpise | Cyber Security Researcher">
-  <meta property="og:description"
-    content="Cyber Security Researcher. Explore my labs, projects, blog, custom exploits for CTF, and more.">
-  <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Shubham Ranpise | Cybersecurity Researcher" />
+    <meta name="twitter:description" content="CTF writeups, AppSec notes, and practical tools by Shubham Ranpise — Cybersecurity Researcher & Application Security enthusiast." />
+    <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Shubham Ranpise | Cyber Security Researcher">
-  <meta name="twitter:description"
-    content="Cyber Security Researcher. Explore my labs, projects, blog, custom exploits for CTF, and more.">
-  <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg">
+    <!-- Favicon -->
+    <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
 
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="./assets/favicon.png" />
-  <title>Shubham Ranpise | Cyber Security Researcher</title>
-  <link rel="stylesheet" href="./static/css/style.css" />
-  <link rel="stylesheet" href="./static/css/mediaqueries.css" />
+    <!-- Preloads -->
+    <link rel="preload" href="./assets/home_light.png" as="image" />
+    <link rel="preload" href="./assets/theme_light.png" as="image" />
+    <link rel="preload" href="./assets/profile-pic.png" as="image" />
 
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Shubham Ranpise",
-  "url": "https://shubhamranpise.com/",
-  "jobTitle": "Cyber Security Researcher",
-  "sameAs": [
-    "https://github.com/ShubhamNR007",
-    "https://www.linkedin.com/in/shubham-ranpise/"
-  ]
-}
-</script>
+    <!-- Theme & Fonts -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <link rel="stylesheet" href="./static/css/style.css" />
+    <link rel="stylesheet" href="./static/css/mediaqueries.css" />
 
-</head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-45Z0Y6HPDS');
+    </script>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Shubham Ranpise",
+      "url": "https://shubhamranpise.com/",
+      "image": "https://shubhamranpise.com/assets/profile-pic.png",
+      "sameAs": [
+        "https://www.linkedin.com/in/shubham-ranpise/",
+        "https://github.com/ShubhamNR007",
+        "https://tryhackme.com/p/shubham361",,
+        "https://app.hackthebox.com/profile/876604"
+        "https://x.com/shubhamrnps"
+      ],
+      "jobTitle": "Cybersecurity Researcher",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "KPMG"
+      },
+      "inLanguage": "en",
+      "knowsAbout": ["Application Security", "CTFs", "OWASP", "Burp Suite", "Python", "Secure Coding"]
+    }
+    </script>
+  </head>
 
 <body>
   <header>
@@ -145,10 +160,8 @@
   <div class="spacer"></div>
 
   <footer>
-
     <p>Copyright &#169; 2025 Shubham Ranpise.</p>
   </footer>
-
   <script src="./static/js/main.js"></script>
 </body>
 
