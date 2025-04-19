@@ -347,9 +347,17 @@ section {
   margin-top: 2rem;
 }
 
+.about-containers h3 {
+  color: var(--secondary-color);
+}
+
 .about-details-container {
   justify-content: center;
   flex-direction: column;
+}
+
+.text-container {
+  text-align: justify;
 }
 
 .about-containers,
@@ -474,8 +482,8 @@ article .icon {
   flex-direction: column;
   justify-content: flex-start;  /* Start at top */
   align-items: center;          /* Keep horizontal centering */
-  height: 70vh;
-  padding-top: 0rem;            /* Optional: adjust spacing from navbar */
+  height: 80vh;
+  padding-top: 5rem;            /* Optional: adjust spacing from navbar */
 }
 
 .contact-info-upper-container {
@@ -608,7 +616,7 @@ footer p {
 }
 
 /* Utility spacing class */
-.spacer { height: 4rem; }
+.spacer { height: 6rem; }
 
 
 
@@ -735,4 +743,10 @@ pre code {
 
 .floating-code-buttons button:hover {
   background-color: var(--button-text-hover);
+}
+
+.highlight-heading {
+  color: var(--secondary-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
 }

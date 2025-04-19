@@ -2,56 +2,71 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Canonical & SEO -->
+  <title>Cybersecurity Notes & Study Material | Shubham Ranpise</title>
+  <meta name="description"
+    content="Explore curated cybersecurity notes by Shubham Ranpise — covering OSCP, eJPT, secure coding practices, cheatsheets, and hands-on red team tips." />
+  <link rel="canonical" href="https://shubhamranpise.com/notes/notes.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cybersecurity Notes & Study Material | Shubham Ranpise" />
+  <meta property="og:description"
+    content="Organized cybersecurity notes for AppSec, OSCP, eJPT, and red teaming." />
+  <meta property="og:url" content="https://shubhamranpise.com/notes/notes.html" />
+  <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cybersecurity Notes | Shubham Ranpise" />
+  <meta name="twitter:description"
+    content="Cheatsheets, study notes, and AppSec references." />
+  <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
+
+  <!-- Preloads -->
+  <link rel="preload" href="./../assets/home_light.png" as="image" />
+  <link rel="preload" href="./../assets/theme_light.png" as="image" />
+  <link rel="preload" href="./../assets/profile-pic.png" as="image" />
+
+  <!-- Theme & Fonts -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <link rel="stylesheet" href="./../static/css/style.css" />
+  <link rel="stylesheet" href="./../static/css/mediaqueries.css" />
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-45Z0Y6HPDS');
   </script>
-  <!-- Basic Meta Tags -->
-  <meta name="title" content="Shubham Ranpise | Cyber Security Researcher">
-  <meta name="description" content="Cybersecurity notes by Shubham Ranpise — from OWASP to secure coding.">
 
-  <!-- Open Graph (Facebook/LinkedIn) -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shubhamranpise.com/">
-  <meta property="og:title" content="Shubham Ranpise | Cyber Security Researcher">
-  <meta property="og:description"
-    content="Cyber Security Researcher. Explore my labs, projects, blog, custom exploits for CTF, and more.">
-  <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Shubham Ranpise | Cyber Security Researcher">
-  <meta name="twitter:description"
-    content="Cyber Security Researcher. Explore my labs, projects, blog, custom exploits for CTF, and more.">
-  <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg">
-
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="./../assets/favicon.png" />
-  <title>Security Notes | Shubham Ranpise</title>
-  <link rel="stylesheet" href="./../static/css/style.css" />
-  <link rel="stylesheet" href="./../static/css/mediaqueries.css" />
-
+  <!-- JSON-LD Schema -->
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Shubham Ranpise",
-  "url": "https://shubhamranpise.com/",
-  "jobTitle": "Cyber Security Researcher",
-  "sameAs": [
-    "https://github.com/ShubhamNR007",
-    "https://www.linkedin.com/in/shubham-ranpise/"
-  ]
-}
-</script>
-
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Cybersecurity Notes and Learning Resources",
+    "description": "Study notes, tips, and learning references for OSCP, eJPT, secure coding, and more — by Shubham Ranpise.",
+    "url": "https://shubhamranpise.com/notes/notes.html",
+    "author": {
+      "@type": "Person",
+      "name": "Shubham Ranpise"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "shubhamranpise.com"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -69,7 +84,7 @@
         <ul class="nav-links">
           <li><a href="./../ctf/ctf.html">CTF</a></li>
           <li><a href="./../notes/notes.html" class="active">Notes</a></li>
-          <li><a href="./../about/about.html">About</a></li>
+          <li><a href="./../index.html#about">About</a></li>
           <li>
             <img id="modeToggle" class="icon color-icon" src="./../assets/theme_light.png"
               src-light="./../assets/theme_light.png" src-dark="./../assets/theme_dark.png" alt="Color theme icon" />
@@ -96,7 +111,7 @@
       <div class="menu-links">
         <li><a href="./../ctf/ctf.html">CTF</a></li>
         <li><a href="./../notes/notes.html" class="active">Notes</a></li>
-        <li><a href="./../about/about.html">About</a></li>
+        <li><a href="./../index.html#about">About</a></li>
         <li>
           <img id="modeToggle2" class="icon color-icon" src="./../assets/theme_light.png"
             src-light="./../assets/theme_light.png" src-dark="./../assets/theme_dark.png" alt="Color theme icon" />
@@ -104,7 +119,6 @@
       </div>
     </div>
   </nav>
-
 
   <footer>
 
