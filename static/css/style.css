@@ -15,7 +15,7 @@
   --button-border: #5b21b6 0.1rem solid;
   --button-border-2: #ffffff 0.1rem solid;
   --container-border: #a78bfa;
-  --gradient-bg: linear-gradient(to bottom, #f3f0ff, #eae4fc); /* Light violet fade */  
+  --gradient-bg: linear-gradient(to bottom, #f3f0ff, #eae4fc); /* Light violet fade */
 }
 
 /* Dark Mode */
@@ -81,27 +81,9 @@ nav,
 }
 
 nav {
-  justify-content: space-between; /* Pushes logo left, nav right */
-  padding: 0 12rem;               /* Controls spacing from edges */
-  height: 12vh;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: top 0.3s ease-in-out;
-
-  /* Glassmorphism-inspired */
-  background-color: rgba(var(--primary-color-2), 0.85); /* More solid background for clear transparency */
-  backdrop-filter: blur(18px); /* Stronger blur for noticeable effect */
-  -webkit-backdrop-filter: blur(18px);
-
-  /* Adding a more visible border to enhance the glassmorphism look */
-  border: 2px solid rgba(var(--secondary-color-2), 0.4); /* Clearer border to give more definition */
-
-  /* Stronger shadow for depth */
-  box-shadow: 0 10px 30px rgba(var(--primary-color), 0.5); /* Stronger shadow for noticeable elevation */
-  
-  /* Text and icon colors */
-  color: var(--secondary-color); /* Light text color for readability */
+  justify-content: space-between; /* ← pushes logo left, nav right */
+  padding: 0 12rem;                /* ← controls spacing from edges */
+  height: 17vh;
 }
 
 .nav-links {
@@ -254,7 +236,7 @@ section {
   display: flex;
   justify-content: center;
   gap: 4.5rem;
-  height: 80vh;
+  height: 70vh;
   margin-top: -30px;
 }
 
@@ -786,7 +768,6 @@ pre code {
   padding: 0.3rem 20rem; /* ← Desktop spacing */
   background-color: transparent;
   font-size: 0.85rem;
-  height: 3rem;
   box-sizing: border-box;
   overflow-x: auto; /* Safe fallback for very long breadcrumb */
 }
@@ -815,31 +796,5 @@ pre code {
 
 .breadcrumb-wrapper a:hover {
   color: var(--button-text-hover); /* Set this in your :root or CSS theme */
-}
-
-#desktop-nav,
-#hamburger-nav {
-  opacity: 1;
-  transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-#desktop-nav.hide,
-#hamburger-nav.hide {
-  opacity: 0;
-}
-
-#desktop-nav,
-#hamburger-nav {
-  position: fixed;
-  align-items: center;
-  width: 75%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  transition: top 0.3s ease-in-out;
-}
-
-.nav-spacer {
-  height: 12vh; /* Same as your nav height */
 }
 
