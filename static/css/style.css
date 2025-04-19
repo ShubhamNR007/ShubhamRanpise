@@ -15,13 +15,7 @@
   --button-border: #5b21b6 0.1rem solid;
   --button-border-2: #ffffff 0.1rem solid;
   --container-border: #a78bfa;
-  --gradient-bg: linear-gradient(to bottom, #f3f0ff, #eae4fc); /* Light violet fade */
-  --violet-color: rgba(var(--primary-color-2), 0.85);
-  --dark-shadow-color: 0 10px 30px rgba(var(--primary-color), 0.5);
-  --light-border-color: 2px solid rgba(var(--secondary-color-2), 0.4);
-  --text-color: var(--secondary-color); 
-  --highlight-color: 255, 255, 255; /* RGB for highlight color */
-  
+  --gradient-bg: linear-gradient(to bottom, #f3f0ff, #eae4fc); /* Light violet fade */  
 }
 
 /* Dark Mode */
@@ -38,12 +32,6 @@
   --button-border-2: #0a0517 0.1rem solid;
   --container-border: #6d28d9;
   --gradient-bg: linear-gradient(to bottom, #140d26, #1c1533); /* Deepened dark blend */
-  --violet-color: 73, 0, 129; /* RGB values for your violet color */
-  --dark-shadow-color: 0, 0, 0; /* RGB for dark shadow color */
-  --light-border-color: 255, 255, 255; /* RGB for light border color */
-  --text-color: 255, 255, 255; /* RGB for text color */
-  --highlight-color: 255, 255, 255; /* RGB for highlight color */
-  
 }
 
 * {
@@ -95,27 +83,26 @@ nav,
 nav {
   justify-content: space-between; /* Pushes logo left, nav right */
   padding: 0 12rem;               /* Controls spacing from edges */
-  height: 10vh;
+  height: 12vh;
   position: sticky;
   top: 0;
   z-index: 1000;
   transition: top 0.3s ease-in-out;
 
   /* Glassmorphism-inspired */
-  background-color: rgba(var(--violet-color), 0.2); /* Use your violet theme color with transparency */
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background-color: rgba(var(--primary-color-2), 0.85); /* More solid background for clear transparency */
+  backdrop-filter: blur(18px); /* Stronger blur for noticeable effect */
+  -webkit-backdrop-filter: blur(18px);
 
-  /* Shadow for subtle elevation */
-  box-shadow: 0 2px 10px rgba(var(--dark-shadow-color), 0.3); /* Use a dark shadow color from your theme */
-  border-bottom: 1px solid rgba(var(--light-border-color), 0.1); /* Light border from your theme */
+  /* Adding a more visible border to enhance the glassmorphism look */
+  border: 2px solid rgba(var(--secondary-color-2), 0.4); /* Clearer border to give more definition */
 
+  /* Stronger shadow for depth */
+  box-shadow: 0 10px 30px rgba(var(--primary-color), 0.5); /* Stronger shadow for noticeable elevation */
+  
   /* Text and icon colors */
-  color: rgba(var(--text-color), 0.9); /* Use your theme's text color */
+  color: var(--secondary-color); /* Light text color for readability */
 }
-
-
-
 
 .nav-links {
   gap: 2rem;
@@ -844,6 +831,7 @@ pre code {
 #desktop-nav,
 #hamburger-nav {
   position: fixed;
+  align-items: center;
   width: 75%;
   top: 0;
   left: 0;
