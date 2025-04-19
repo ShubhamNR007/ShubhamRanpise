@@ -695,6 +695,15 @@ footer p {
   text-align: left;
 }
 
+.lab-date {
+  color: var(--secondary-color);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-align: right;
+}
+
 .lab-section p {
   text-align: justify;
   line-height: 1.6;
