@@ -141,3 +141,17 @@
     width: 60%;
   }
 }
+
+/* Tablet    breadcrumb */
+@media (max-width: 1024px) {
+  .breadcrumb-wrapper {
+    padding: 0.3rem 4rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .breadcrumb-wrapper {
+    padding: 0.3rem 1.2rem;
+  }
+}

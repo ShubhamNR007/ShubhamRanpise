@@ -751,7 +751,7 @@ pre code {
 }
 
 .floating-code-buttons button:hover {
-  background-color: var(--button-text-hover);
+  background-color: var(--secondary-color);
 }
 
 .highlight-heading {
@@ -759,3 +759,42 @@ pre code {
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
+.breadcrumb-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0.3rem 20rem; /* ← Desktop spacing */
+  background-color: transparent;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  overflow-x: auto; /* Safe fallback for very long breadcrumb */
+}
+
+.breadcrumb-wrapper p {
+  margin: 0;
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  word-break: break-word;
+}
+
+.breadcrumb-wrapper a,
+.breadcrumb-wrapper span {
+  color: var(--secondary-color-2);
+  font-weight: 500;
+  font-size: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.breadcrumb-wrapper span:last-child {
+  color: var(--button-text-hover);
+  font-weight: 600;
+}
+
+.breadcrumb-wrapper a:hover {
+  color: var(--button-text-hover); /* Set this in your :root or CSS theme */
+}
+
