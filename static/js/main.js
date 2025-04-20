@@ -1,78 +1,53 @@
-function toggleMenu() {
-  const menu = document.querySelector(".menu-links");
-  const icon = document.querySelector(".hamburger-icon");
-  menu.classList.toggle("open");
-  icon.classList.toggle("open");
-}
-
-// Dark / light mode
 
 const btn = document.getElementById("modeToggle");
 const btn2 = document.getElementById("modeToggle2");
 const themeIcons = document.querySelectorAll(".icon");
 const currentTheme = localStorage.getItem("theme");
 
-if (currentTheme === "dark") {
-  setDarkMode();
-}
-
-btn.addEventListener("click", function () {
-  setTheme();
-});
-
-btn2.addEventListener("click", function () {
-  setTheme();
-});
-
-function setTheme() {
-  let currentTheme = document.body.getAttribute("theme");
-
-  if (currentTheme === "dark") {
-    setLightMode();
-  } else {
+// Auto-apply system theme if no preference stored
+if (!currentTheme) {
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (systemPrefersDark) {
     setDarkMode();
+  } else {
+    setLightMode();
   }
+} else if (currentTheme === "dark") {
+  setDarkMode();
+} else {
+  setLightMode();
 }
 
 function setDarkMode() {
-  document.body.setAttribute("theme", "dark");
+  document.documentElement.setAttribute("theme", "dark");
   localStorage.setItem("theme", "dark");
-
-  themeIcons.forEach((icon) => {
+  themeIcons.forEach(icon => {
     icon.src = icon.getAttribute("src-dark");
   });
 }
 
 function setLightMode() {
-  document.body.removeAttribute("theme");
+  document.documentElement.setAttribute("theme", "light");
   localStorage.setItem("theme", "light");
-
-  themeIcons.forEach((icon) => {
+  themeIcons.forEach(icon => {
     icon.src = icon.getAttribute("src-light");
   });
 }
 
-document.querySelectorAll(".copy-btn").forEach((btn, index) => {
-  btn.addEventListener("click", () => {
-    const code = btn.closest(".code-block-wrapper").querySelector("code").innerText;
-    navigator.clipboard.writeText(code);
-    btn.textContent = "✅ Copied";
-    setTimeout(() => btn.textContent = "📋 Copy", 1500);
-  });
+btn.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("theme");
+  if (current === "dark") {
+    setLightMode();
+  } else {
+    setDarkMode();
+  }
 });
 
-document.querySelectorAll(".download-btn").forEach((btn, index) => {
-  btn.addEventListener("click", () => {
-    const code = btn.closest(".code-block-wrapper").querySelector("code").innerText;
-    const blob = new Blob([code], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `exploit.py`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  });
+btn2.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("theme");
+  if (current === "dark") {
+    setLightMode();
+  } else {
+    setDarkMode();
+  }
 });
-
