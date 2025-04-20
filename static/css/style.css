@@ -83,7 +83,7 @@ nav,
 nav {
   justify-content: space-between; /* ← pushes logo left, nav right */
   padding: 0 12rem;                /* ← controls spacing from edges */
-  height: 17vh;
+  height: 12vh;
 }
 
 .nav-links {
@@ -339,6 +339,8 @@ section {
 
 #about {
   position: relative;
+  height: 70vh;
+  padding-top: 0rem; 
 }
 
 .about-containers {
@@ -482,7 +484,7 @@ article .icon {
   flex-direction: column;
   justify-content: flex-start;  /* Start at top */
   align-items: center;          /* Keep horizontal centering */
-  height: 80vh;
+  height: 70vh;
   padding-top: 5rem;            /* Optional: adjust spacing from navbar */
 }
 
