@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Canonical & SEO -->
+    <title>eJPT Study Notes (2022) | Shubham Ranpise</title>
+    <meta name="description"
+        content="Study notes from 2022 eJPT preparation. Covers key topics in networking, exploitation, information gathering, and practical tips." />
+    <link rel="canonical" href="https://shubhamranpise.com/notes/eJPT.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="eJPT Study Notes (2022) | Shubham Ranpise" />
+    <meta property="og:description"
+        content="A detailed collection of study notes from journey while preparing for the eLearnSecurity Junior Penetration Tester certification." />
+    <meta property="og:url" content="https://shubhamranpise.com/notes/eJPT.html" />
+    <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="eJPT Notes by Shubham Ranpise (2022)" />
+    <meta name="twitter:description"
+        content="Explore hands-on eJPT study material, tools, and tips from learning journey in 2022." />
+    <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
+
+    <!-- Preloads -->
+    <link rel="preload" href="./../assets/home_light.png" as="image" />
+    <link rel="preload" href="./../assets/theme_light.png" as="image" />
+    <link rel="preload" href="./../assets/profile-pic.png" as="image" />
+
+    <!-- Theme & Fonts -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <link rel="stylesheet" href="./../static/css/style.css" />
+    <link rel="stylesheet" href="./../static/css/mediaqueries.css" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-45Z0Y6HPDS');
+    </script>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "eJPT Study Notes (2022)",
+    "description": "Detailed eJPT learning notes and tips compiled by Shubham Ranpise while preparing for the eLearnSecurity Junior Penetration Tester certification.",
+    "author": {
+      "@type": "Person",
+      "name": "Shubham Ranpise"
+    },
+    "datePublished": "2022-10-07",
+    "educationalUse": "study",
+    "learningResourceType": "notes",
+    "url": "https://shubhamranpise.com/notes/eJPT.html",
+    "image": "https://shubhamranpise.com/assets/og-image.jpg",
+    "publisher": {
+      "@type": "Organization",
+      "name": "shubhamranpise.com"
+    }
+  }
+  </script>
+</head>
+
+<body>
+    <header>
+        <nav id="desktop-nav">
+            <div class="logo">
+                <a href="./../index.html" class="logo-wrapper">
+                    <img src="./../assets/home_light.png" src-light="./../assets/home_light.png"
+                        src-dark="./../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                    <span>Shubham</span>
+                </a>
+            </div>
+
+            <div>
+                <ul class="nav-links">
+                    <li><a href="./../ctf/ctf.html">CTF</a></li>
+                    <li><a href="./../notes/notes.html" class="active">Notes</a></li>
+                    <li><a href="./../about/about.html">About</a></li>
+                    <li>
+                        <img id="modeToggle" class="icon color-icon" src="./../assets/theme_light.png"
+                            src-light="./../assets/theme_light.png" src-dark="./../assets/theme_dark.png"
+                            alt="Color theme icon" />
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <nav id="hamburger-nav">
+        <div class="logo">
+            <a href="./../index.html" class="logo-wrapper">
+                <img src="./../assets/home_light.png" src-light="./../assets/home_light.png"
+                    src-dark="./../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                <span>Shubham</span>
+            </a>
+        </div>
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links">
+                <li><a href="./../ctf/ctf.html">CTF</a></li>
+                <li><a href="./../notes/notes.html" class="active">Notes</a></li>
+                <li><a href="./../about/about.html">About</a></li>
+                <li>
+                    <img id="modeToggle2" class="icon color-icon" src="./../assets/theme_light.png"
+                        src-light="./../assets/theme_light.png" src-dark="./../assets/theme_dark.png"
+                        alt="Color theme icon" />
+                </li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb-wrapper">
+        <p class="breadcrumb-text">/
+            <a href="./../index.html">Home</a>/
+            <a href="./notes.html">Notes</a>/
+            <span>eJPT</span>
+        </p>
+    </div>
+    <br>
+    <section id="ctf">
+        <h2 class="lab-heading">eJPT</h2>
+        <div class="lab-section">
+            <h3 class="lab-date">🕗 07-October-2025</h3>
+
+
+            
+        </div>
+    </section>
+    <footer>
+        <p>Copyright &#169; 2025 Shubham Ranpise.</p>
+    </footer>
+
+    <script src="./../static/js/main.js"></script>
+</body>
+
+</html>
