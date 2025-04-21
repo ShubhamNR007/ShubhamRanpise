@@ -69,10 +69,6 @@ body {
   background: var(--gradient-bg);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 p {
   color: var(--secondary-color-2);
 }
