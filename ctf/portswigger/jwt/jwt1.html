@@ -16,7 +16,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="JWT Authentication Bypass via Unverified Signature | Shubham Ranpise" />
     <meta property="og:description"
-        content="Explore a real-world JWT vulnerability where signature validation is skipped. Learn the exploit approach, payload crafting, and mitigation strategies." />
+        content="Explore a real-world JWT vulnerability where signature validation is skipped. Learn the exploit approach, payload crafting." />
     <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/jwt1.html" />
     <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
 
@@ -147,9 +147,9 @@
                 and delete another user from the app. This flaw wasn’t about skipping signature logic — but trusting
                 unsigned data.</p>
 
-            <h3 class="lab-subheading">⚙️ How to Run the Exploit</h3>
+            <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
             <p>
-                [+] Open Burp Suite to observe the entire flow.<br>
+                [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
                 [+] The script uses a static "alg": "none" and creates a full JWT with a fake payload and no
                 signature.<br>
                 [+] No login or dynamic token grabbing here — just pure forgery.<br>

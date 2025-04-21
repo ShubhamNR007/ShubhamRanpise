@@ -51,7 +51,7 @@
     "@context": "https://schema.org",
     "@type": "LearningResource",
     "name": "JWT Authentication Bypass via Unverified Signature",
-    "description": "Walkthrough of a PortSwigger lab demonstrating how JWT signature verification can be bypassed using insecure configurations. Includes payload crafting and mitigation insights.",
+    "description": "Walkthrough of a PortSwigger lab demonstrating how JWT signature verification can be bypassed using insecure configurations. Includes payload crafting.",
     "author": {
       "@type": "Person",
       "name": "Shubham Ranpise"
@@ -143,7 +143,7 @@
                     token and the server blindly trusted it — this let me switch identities to administrator and
                     perform privileged actions. It was an eye-opener on why skipping JWT validation is catastrophic.</p>
                
-                <h3 class="lab-subheading">⚙️ How to Run the Exploit</h3>
+                <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
                 <p>
                     [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
                     [+] The script logs in as wiener to capture a real JWT and extracts the kid value.<br>

